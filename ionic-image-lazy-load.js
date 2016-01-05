@@ -34,6 +34,7 @@ angular.module('ionicLazyLoad')
             scope: {
                 lazyScrollResize: "@lazyScrollResize",
                 lazyScrollBottom: "@lazyScrollBottom",
+                lazyLoadAll: "@lazyLoadAll",
                 imageLazyBackgroundImage: "@imageLazyBackgroundImage",
                 imageLazySrc: "@"
             },
@@ -59,7 +60,7 @@ angular.module('ionicLazyLoad')
                         $element.after(loader);
                     }
                     var deregistration = $scope.$on('lazyScrollEvent', function () {
-                        //    console.log('scroll');
+                            //console.log('scroll');
                             if (isInView()) {
                                 loadImage();
                                 deregistration();
@@ -74,7 +75,7 @@ angular.module('ionicLazyLoad')
                     }, 500);
                 });
                 var deregistration = $scope.$on('lazyScrollEvent', function () {
-                       // console.log('scroll');
+                        //console.log('scroll');
                         if (isInView()) {
                             loadImage();
                             deregistration();
@@ -119,11 +120,16 @@ angular.module('ionicLazyLoad')
                 }
 
                 function isInView() {
+                    if($scope.lazyLoadAll == "true"){
+                        return true;
+                    }
                     var clientHeight = $document[0].documentElement.clientHeight;
                     var clientWidth = $document[0].documentElement.clientWidth;
                     var imageRect = $element[0].getBoundingClientRect();
-                    return (imageRect.top >= 0 && imageRect.top <= clientHeight + parseInt($attributes.imageLazyDistanceFromBottomToLoad))
+                    var result = (imageRect.top >= 0 && imageRect.top <= clientHeight + parseInt($attributes.imageLazyDistanceFromBottomToLoad))
                         && (imageRect.left >= 0 && imageRect.left <= clientWidth + parseInt($attributes.imageLazyDistanceFromRightToLoad));
+                    console.log('Is in view: '+result);
+                    return result;
                 }
 
                 // bind listener
