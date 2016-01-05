@@ -33,6 +33,7 @@ angular.module('ionicLazyLoad')
             restrict: 'A',
             scope: {
                 lazyScrollResize: "@lazyScrollResize",
+                lazyScrollBottom: "@lazyScrollBottom",
                 imageLazyBackgroundImage: "@imageLazyBackgroundImage",
                 imageLazySrc: "@"
             },
@@ -91,6 +92,11 @@ angular.module('ionicLazyLoad')
                             //Call the resize to recalculate the size of the screen
                             $ionicScrollDelegate.resize();
                         }
+                        if ($scope.lazyScrollBottom == "true") {
+                            //Call the resize to recalculate the size of the screen
+                            $ionicScrollDelegate.scrollBottom();
+                        }
+
                         $element.unbind("load");
                     });
 
